@@ -25,7 +25,8 @@ SECRET_KEY = '+7cb^xpy&!k2088qb=5xb4k=hwy513gb$7fin$n9%&dmc+8hjy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# add this ip in order to let other devices visit this site
+ALLOWED_HOSTS = ['192.168.199.113']
 
 
 # Application definition
