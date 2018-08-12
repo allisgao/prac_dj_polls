@@ -26,7 +26,8 @@ SECRET_KEY = '+7cb^xpy&!k2088qb=5xb4k=hwy513gb$7fin$n9%&dmc+8hjy'
 DEBUG = True
 
 # add this ip in order to let other devices visit this site
-ALLOWED_HOSTS = ['192.168.199.113']
+# ALLOWED_HOSTS = ['192.168.199.113']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
