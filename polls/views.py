@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Question, Choice
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 # Create your views here.
 
 '''
@@ -19,8 +20,11 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        """ Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        """ Return the last five published questions(not including those set to be published in the future)."""
+        # return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')[:5]
 
 
 '''
@@ -41,7 +45,13 @@ def detail(request, question_id):
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
-
+    # 就算在发布日期时未来的那些投票不会在目录页 index 里出现，但是如果用户知道或者猜到正确的 URL ，还是可以访问到它们。所以我们得在 DetailView 里增加一些约束
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet
+        :return:
+        """
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
 """
 def results(request, question_id):
