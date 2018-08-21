@@ -1,1 +1,6 @@
 *__pycache__*
+<<<<<<< HEAD
+=======
+db.sqlite3
+*/migrations/*.py
+>>>>>>> a8f87a5... modify ignore expressions in order to not tracking db.sqlite3 and migrations
