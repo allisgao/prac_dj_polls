@@ -45,7 +45,13 @@ def detail(request, question_id):
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
-
+    # 就算在发布日期时未来的那些投票不会在目录页 index 里出现，但是如果用户知道或者猜到正确的 URL ，还是可以访问到它们。所以我们得在 DetailView 里增加一些约束
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet
+        :return:
+        """
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
 """
 def results(request, question_id):
